@@ -26,9 +26,9 @@ Measured on a Mac, Release build, median of 5 runs. Times cover loading and anal
 
 | Mesh | Size | Load time |
 | --- | --- | --- |
-| Large OBJ model (not included in the repo) | 107.8 MB, 2,379,792 vertices, 1,574,657 triangles | about 1.75 s (1,749 ms) |
-| `trex.obj`, before the `fnext` change | 7,753 vertices, 15,169 triangles | 6,334 ms |
-| `trex.obj`, after the `fnext` change | 7,753 vertices, 15,169 triangles | 32 ms |
+| `sample-models/destroyer.obj` (Git LFS) | 107.8 MB, 2,379,792 vertices, 1,574,657 triangles | about 1.75 s (1,749 ms) |
+| `sample-models/trex.obj`, before the `fnext` change | 7,753 vertices, 15,169 triangles | 6,334 ms |
+| `sample-models/trex.obj`, after the `fnext` change | 7,753 vertices, 15,169 triangles | 32 ms |
 
 Replacing the full triangle scan in `fnext` with a vertex-to-triangle lookup cut adjacency construction from O(n²) to near-linear time, making `trex.obj` load nearly 200× faster. Capacity is 2.5M vertices and 1.7M triangles (`MAXV` and `MAXT` in `Source/mesh.h`).
 
@@ -56,6 +56,8 @@ Requires macOS with Xcode (OpenGL and GLUT are system frameworks).
 2. Press Cmd + R to build and run.
 3. In the console, enter the path of an OBJ file, for example `sample-models/teapot.obj`. The scheme runs from the project folder, so paths relative to the repository root work.
 
+The largest sample model, `destroyer.obj`, is stored with [Git LFS](https://git-lfs.com). Install Git LFS, then run `git lfs pull` after cloning. Without it, the file is a small text pointer and the program reports 0 vertices.
+
 The console prints the vertex and triangle counts, the angle statistics, the number of connected components and the load time, then opens the viewer window.
 
 ## Project layout
@@ -66,7 +68,7 @@ Source/
   mesh.h        Mesh class and oriented-triangle helpers
   mesh.cpp      OBJ reading and writing, normals, statistics, adjacency,
                 components, boundary edges and drawing
-sample-models/  Example OBJ meshes, from 6 to 28,340 triangles
+sample-models/  Example OBJ meshes, from 6 to 1,574,657 triangles (the largest via Git LFS)
 docs/images/    Screenshots
 MeshModeler.xcodeproj
 ```
