@@ -1,0 +1,13 @@
+# Xcode user data
+xcuserdata/
+*.xcuserstate
+
+# Build outputs
+build/
+DerivedData/
+*.o
+/MeshModeler
+
+# OS files
+.DS_Store
+desktop.ini

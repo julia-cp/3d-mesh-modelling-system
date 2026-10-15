@@ -1,0 +1,54 @@
+#pragma once
+
+// maximum number of vertices and triangles
+#define MAXV 2500000
+#define MAXT 1700000
+
+typedef int OrTri;
+typedef int tIdx;
+
+inline OrTri makeOrTri(tIdx t, int version) { return (t << 3) | version; };
+inline tIdx idx(OrTri ot) { return ot >> 3; };
+inline int ver(OrTri ot) { return ot & 0b111; };
+inline OrTri enext(OrTri ot);
+inline OrTri sym(OrTri ot);
+
+
+
+
+class myObjType {
+    int vcount = 0;
+    int tcount = 0;
+    
+    double vlist[MAXV][3];   // vertices list
+    int tlist[MAXT][3];      // triangle list
+    int fnlist[MAXT][3];     // fnext list: adjacent oriented triangle across each edge
+    double nlist[MAXT][3];   // storing triangle normals
+    double vnlist[MAXV][3];  // storing vertex normals
+	
+	double lmax[3];          // the maximum coordinates of x,y,z
+	double lmin[3];          // the minimum coordinates of x,y,z
+
+	int statMinAngle[18]; // each bucket is  degrees has a 10 degree range from 0 to 180 degree
+	int statMaxAngle[18]; 
+
+
+public:
+	myObjType() { vcount = 0; tcount = 0; };
+	void readFile(char* filename);  // assumming file contains a manifold
+	void writeFile(char* filename);  
+	void draw();  
+    void computeStat();
+    int org(int id_version);
+    int dest(int id_version);
+    int fnext(int id_version);
+    int computeNumberOfComponents();
+    void computeVertexNormal();
+    void visualizeBoundaryEdges();
+    void toggleBoundaryEdges();
+    void highlightComponents();
+    void toggleHighlight();
+    void changeHighlightColour();
+};
+
+
